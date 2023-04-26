@@ -6,7 +6,7 @@ namespace ErenYeager
     // main program class to interact with the user
     public class Program
     {
-
+        public static int action;
         public static void Main(string[] args)
         {
             Program cli = new Program();
@@ -48,40 +48,47 @@ namespace ErenYeager
             AddStep();
 }
 
-// Prompt the user for the action they want to perform
-string action = "";
-while (action != "exit")
+            // Prompt the user for the action they want to perform
+            
+while (action <= 7)
 {
-    Console.Write("\nWhat would you like to do? (add ingredient, add step, print recipe, scale recipe, reset quantities, clear recipe, exit): ");
-    action = Console.ReadLine().ToLower();
+    Console.Write("\nWhat would you like to do?\n" +
+        "1. Add ingredient\n" +
+        "2. Add step\n" +
+        "3. Print recipe\n" +
+        "4. Scale recipe\n" +
+        "5. Reset quantities\n" +
+        "6. Clear recipe\n" +
+        "7. Exit): ");
+    action = Convert.ToInt32(Console.ReadLine());
 
     switch (action)
     {
-        case "add ingredient":
+        case 1:
             AddIngredient();
             break;
 
-        case "add step":
+        case 2:
             AddStep();
             break;
 
-        case "print recipe":
+        case 3:
             PrintRecipe();
             break;
 
-        case "scale recipe":
+        case 4:
             ScaleRecipe();
             break;
 
-        case "reset quantities":
+        case 5:
             ResetQuantities();
             break;
 
-        case "clear recipe":
+        case 6:
             ClearRecipe();
             break;
 
-        case "exit":
+        case 7:
             Console.WriteLine("\nGoodbye!");
             break;
 
