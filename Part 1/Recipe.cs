@@ -15,9 +15,9 @@ namespace RecipeApplication
         private bool isScaled;
 
         // Constructor
-        public Recipe(string name)
+        public Recipe(string nawa)
         {
-            recipeName = name;
+            recipeName = nawa;
             ingredientsList = new List<Ingredient>();
             stepsList = new List<Step>();
             servingSize = 1;
@@ -26,31 +26,37 @@ namespace RecipeApplication
 
         // Methods
 
-        public void AddIngredient(double quantity)
-    {
+        public void AddIngredient()
+        {
             Console.WriteLine("Enter recipe name:");
             string nawa = Console.ReadLine();
             Console.WriteLine("Enter number of servings:");
             int servings = int.Parse(Console.ReadLine());
-
+            
             Console.WriteLine("Enter number of ingredients:");
             int numIngredients = int.Parse(Console.ReadLine());
-
-
+            
             for (int i = 0; i < numIngredients; i++)
             {
+                
                 Console.WriteLine($"Enter ingredient {i + 1}:");
                 string name = Console.ReadLine();
 
-                Console.WriteLine($"Enter amount of {name}:");
-                double amount = double.Parse(Console.ReadLine());
+                Console.WriteLine($"Enter quantity of {name}:");
+                double quantity = double.Parse(Console.ReadLine());
 
                 Console.WriteLine($"Enter unit of {name}:");
                 string unit = Console.ReadLine();
 
-                ingredientsList[i] = new Ingredient(name, amount, unit);
-            }
+                if (i >= 0 && i < ingredientsList.Count)
+                {
+                    ingredientsList[i] = new Ingredient(name, quantity, unit);
+                }
 
+                
+
+            }
+            
             Console.WriteLine("Enter number of steps:");
             int numSteps = int.Parse(Console.ReadLine());
 
@@ -58,14 +64,17 @@ namespace RecipeApplication
             {
                 Console.WriteLine($"Enter step {i + 1}:");
                 string description = Console.ReadLine();
-
-                stepsList[i] = new Step(description);
+                if (i >= 0 && i < stepsList.Count)
+                {
+                    stepsList[i] = new Step(description);
+                }
             }
         }
 
         // Scale method scales the recipe by the given factor
-        public void Scale(double factor)
+        public void Scale()
         {
+            double factor = 1;
             if (factor <= 0)
             {
                 Console.WriteLine("Invalid scale factor. The scale factor must be greater than 0.");
@@ -84,6 +93,7 @@ namespace RecipeApplication
                 servingSize *= factor;
                 isScaled = true;
             }
+            
         }
 
         // Reset method resets the recipe back to its original scale
@@ -119,22 +129,18 @@ namespace RecipeApplication
         // DisplayRecipe method displays the recipe to the console
         public void DisplayRecipe()
         {
-            Console.WriteLine("\nRecipe: " + recipeName);
-            Console.WriteLine("Serving size: " + servingSize + "\n");
-
+            Console.WriteLine($"Recipe for {recipeName} (serves {servingSize}):");
             Console.WriteLine("Ingredients:");
             foreach (Ingredient ingredient in ingredientsList)
             {
-                Console.WriteLine("- " + ingredient.ToString());
+                Console.WriteLine($"- {ingredient.Quantity} {ingredient.Unit} {ingredient.Name}");
             }
 
-            Console.WriteLine("\nSteps:");
-            for (int i = 0; i < stepsList.Count; i++)
+            Console.WriteLine("Steps:");
+            foreach (Step step in stepsList)
             {
-                Console.WriteLine((i + 1) + ". " + stepsList[i].ToString());
+                Console.WriteLine($"- {step.Description}");
             }
-
-            Console.WriteLine();
         }
     }
 }

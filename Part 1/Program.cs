@@ -5,9 +5,7 @@ namespace RecipeApplication
     // main program class to interact with the user
     class Program
     {
-        public static double quantity, factor;
-        public static string unit, name, description;
-
+        
         public static void Main(string[] args)
         {
             Console.WriteLine("Welcome to Recipe Scaler!");
@@ -31,16 +29,15 @@ namespace RecipeApplication
                 {
                     case "1":
                         Console.WriteLine("\nCreating a new recipe");
-                        currentRecipe = new Recipe("My Recipe");
-                        currentRecipe.AddIngredient(quantity);
-                        
+                        currentRecipe = new Recipe("Your Recipe");
+                        currentRecipe.AddIngredient();
                         break;
 
                     case "2":
                         Console.WriteLine("\nScaling the recipe");
                         if (currentRecipe != null)
                         {
-                            currentRecipe.Scale(factor);
+                            currentRecipe.Scale();
                         }
                         else
                         {
