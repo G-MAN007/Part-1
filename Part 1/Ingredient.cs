@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RecipeApplication
+﻿namespace RecipeApplication
 {
     // Ingredient class to represent an ingredient in the recipe
     internal class Ingredient

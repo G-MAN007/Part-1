@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Remoting.Lifetime;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace RecipeApplication
 {
     // Recipe class to manage the ingredients and steps in the recipe
-    public class Recipe
+    class Recipe
     {
         // Properties
         private string recipeName;
@@ -30,18 +26,41 @@ namespace RecipeApplication
 
         // Methods
 
-        // AddIngredient method adds a new ingredient to the recipe
-        public void AddIngredient(string name, double quantity, string unit)
-        {
-            Ingredient newIngredient = new Ingredient(name, quantity, unit);
-            ingredientsList.Add(newIngredient);
-        }
+        public void AddIngredient(double quantity)
+    {
+            Console.WriteLine("Enter recipe name:");
+            string nawa = Console.ReadLine();
+            Console.WriteLine("Enter number of servings:");
+            int servings = int.Parse(Console.ReadLine());
 
-        // AddStep method adds a new step to the recipe
-        public void AddStep(string stepText)
-        {
-            Step newStep = new Step(stepText);
-            stepsList.Add(newStep);
+            Console.WriteLine("Enter number of ingredients:");
+            int numIngredients = int.Parse(Console.ReadLine());
+
+
+            for (int i = 0; i < numIngredients; i++)
+            {
+                Console.WriteLine($"Enter ingredient {i + 1}:");
+                string name = Console.ReadLine();
+
+                Console.WriteLine($"Enter amount of {name}:");
+                double amount = double.Parse(Console.ReadLine());
+
+                Console.WriteLine($"Enter unit of {name}:");
+                string unit = Console.ReadLine();
+
+                ingredientsList[i] = new Ingredient(name, amount, unit);
+            }
+
+            Console.WriteLine("Enter number of steps:");
+            int numSteps = int.Parse(Console.ReadLine());
+
+            for (int i = 0; i < numSteps; i++)
+            {
+                Console.WriteLine($"Enter step {i + 1}:");
+                string description = Console.ReadLine();
+
+                stepsList[i] = new Step(description);
+            }
         }
 
         // Scale method scales the recipe by the given factor
@@ -59,7 +78,7 @@ namespace RecipeApplication
             {
                 foreach (Ingredient ingredient in ingredientsList)
                 {
-                    ingredient.Scale(factor);
+                    ingredient.ScaleIngredient(factor);
                 }
 
                 servingSize *= factor;
@@ -74,7 +93,7 @@ namespace RecipeApplication
             {
                 foreach (Ingredient ingredient in ingredientsList)
                 {
-                    ingredient.Reset();
+                    ingredient.ResetQuantity(1);
                 }
 
                 servingSize = 1;
@@ -119,9 +138,9 @@ namespace RecipeApplication
         }
     }
 }
-    
 
 
 
 
-    
+
+
