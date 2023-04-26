@@ -1,6 +1,8 @@
 # Part-1 
-A list of how I(Loyiso Ndlovu_ST10161873) compiled the code and what each class has:
+Link to my code:
+https://github.com/G-MAN007/Part-1
 
+A list of how I(Loyiso Ndlovu_ST10161873) compiled the code and what each class has:
 1. Ingredient class:
 ToString(): returns a string representation of the ingredient.
 
