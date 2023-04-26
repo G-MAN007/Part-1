@@ -1,119 +1,88 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Lifetime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace RecipeApplication
 {
+    // Recipe class to manage the ingredients and steps in the recipe
     internal class Recipe
     {
-        private List<Ingredient> ingredients = new List<Ingredient>();
-        private Dictionary<Ingredient, List<string>> ingredientSteps = new Dictionary<Ingredient, List<string>>();
-        private List<Ingredient> originalIngredients = new List<Ingredient>();
+        // Properties
+        public string Name { get; set; }
+        public List<Ingredient> Ingredients { get; private set; }
+        public List<Step> Steps { get; private set; }
 
+        // Constructor
+        public Recipe(string name)
+        {
+            Name = name;
+            Ingredients = new List<Ingredient>();
+            Steps = new List<Step>();
+        }
+
+        // Add an ingredient to the recipe
         public void AddIngredient(string name, double quantity, string unit)
         {
-            Console.Write("How many ingredients will you input?");
-            int num = Convert.ToInt32(Console.ReadLine());
-
-            for (int i = 0; i < num; i++)
-
-            {
-                Console.Write($"How many steps for {name}? ");
-                int numSteps = int.Parse(Console.ReadLine());
-
-                for (int z = 0; z < numSteps; z++)
-                {
-                    Console.Write($"Step {z + 1}: ");
-                    string description = Console.ReadLine();
-                    AddStep(description);
-                }
-            }
-            ingredients.Add(new Ingredient { Name = name, Quantity = quantity, Unit = unit });
-
-            Ingredient ingredient = new Ingredient { Name = name, Quantity = quantity, Unit = unit };
-            
-            originalIngredients.Add(new Ingredient { Name = name, Quantity = quantity, Unit = unit });
-
-            ingredientSteps.Add(ingredient, new List<string>());
-
+            Ingredients.Add(new Ingredient(name, quantity, unit));
         }
 
+        // Add a step to the recipe
         public void AddStep(string description)
         {
-            if (ingredients.Count > 0)
-            {
-                Ingredient currentIngredient = ingredients.Last();
-                if (!ingredientSteps.ContainsKey(currentIngredient))
-                {
-                    ingredientSteps[currentIngredient] = new List<string>();
-                }
-                ingredientSteps[currentIngredient].Add(description);
-            }
+            Steps.Add(new Step(description));
         }
 
-        public void Scale(double factor)
+        // Scale the recipe by a given factor
+        public void ScaleRecipe(double factor)
         {
-            
-            foreach (Ingredient ingredient in ingredients)
+            foreach (Ingredient ingredient in Ingredients)
             {
                 ingredient.Quantity *= factor;
             }
         }
 
-        public void Reset()
+        // Reset the recipe to its original quantities before scaling
+        public void ResetRecipe()
         {
-            for (int i = 0; i < ingredients.Count; i++)
+            foreach (Ingredient ingredient in Ingredients)
             {
-                ingredients[i].Quantity = originalIngredients[i].Quantity;
+                ingredient.ResetQuantity();
             }
         }
 
-        public void Clear()
+        // Clear all the ingredients and steps from the recipe
+        public void ClearRecipe()
         {
-            ingredients.Clear();
-            ingredientSteps.Clear();
-            originalIngredients.Clear();
+            Ingredients.Clear();
+            Steps.Clear();
         }
-
-        public override string ToString()
+        public void DisplayRecipe(Recipe recipe)
         {
-            StringBuilder builder = new StringBuilder();
+            Console.WriteLine($"Recipe Name: {recipe.Name}\n");
 
-            builder.AppendLine("Ingredients:");
-            foreach (Ingredient ingredient in ingredients)
+            Console.WriteLine("Ingredients:");
+            for (int i = 0; i < recipe.Ingredients.Count; i++)
             {
-                builder.AppendLine($"{ingredient.Name}: \n {ingredient.Quantity} {ingredient.Unit}");
+                Ingredient ingredient = recipe.Ingredients[i];
+                Console.WriteLine($"{i + 1}. {ingredient.Name} - {ingredient.Quantity} {ingredient.Unit}");
             }
 
-            return builder.ToString();
-        }
-
-        public string ToStringWithSteps()
-        {
-            StringBuilder sb = new StringBuilder();
-
-            sb.AppendLine($"Recipe :");
-            sb.AppendLine();
-
-            foreach (Ingredient ingredient in ingredients)
+            Console.WriteLine("\nSteps:");
+            for (int i = 0; i < recipe.Steps.Count; i++)
             {
-                sb.AppendLine($"{ingredient.Name}: \n{ingredient.Quantity} {ingredient.Unit}");
-                if (ingredientSteps.ContainsKey(ingredient))
-                {
-                    List<string> steps = ingredientSteps[ingredient];
-                    for (int a = 0; a < steps.Count; a++)
-                    {
-                        sb.AppendLine($"{a + 1}. Steps: \n{steps[a]}");
-                    }
-                }
-                sb.AppendLine();
+                Step step = recipe.Steps[i];
+                Console.WriteLine($"{i + 1}. {step.Description}");
             }
-
-            return sb.ToString();
         }
     }
 }
+    
 
+
+
+
+    

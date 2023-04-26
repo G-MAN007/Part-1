@@ -6,14 +6,28 @@ using System.Threading.Tasks;
 
 namespace RecipeApplication
 {
+    // Ingredient class to represent an ingredient in the recipe
     internal class Ingredient
     {
-            public string Name { get; set; }
-            public double Quantity { get; set; }
-            public string Unit { get; set; }
-        public override string ToString()
+        // Properties
+        public string Name { get; set; }
+        public double Quantity { get; set; }
+        public string Unit { get; set; }
+        private double originalQuantity;
+
+        // Constructor
+        public Ingredient(string name, double quantity, string unit)
         {
-            return $"{Quantity} {Unit} of {Name}";
+            Name = name;
+            Quantity = quantity;
+            Unit = unit;
+            originalQuantity = quantity;
+        }
+
+        // Reset the ingredient quantity to its original quantity
+        public void ResetQuantity()
+        {
+            Quantity = originalQuantity;
         }
     }
 }

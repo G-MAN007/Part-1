@@ -7,76 +7,64 @@ using System.Xml.Linq;
 
 namespace RecipeApplication
 {
-    internal class Program
+    // main program class to interact with the user
+    class Program
     {
-
+        public static string name, unit, description;
+        public static double factor, quantity;
         static void Main(string[] args)
         {
-            Recipe recipe = new Recipe();
+            Console.WriteLine("Welcome to Recipe Scaler!");
 
-            ConsoleColor orange = ConsoleColor.Red;
-            ConsoleColor blue = ConsoleColor.Blue;
-
-
-            while (true)
+            Recipe recipe = new Recipe(); // create a new recipe object
+            bool exit = false;
+            while (!exit)
             {
-                Console.ForegroundColor = orange;
-                Console.BackgroundColor = blue;
-                Console.WriteLine("Enter a command:");
-                Console.WriteLine("1. Add ingredient");
-                Console.WriteLine("2. Scale recipe");
-                Console.WriteLine("3. Print recipe");
-                Console.WriteLine("4. Reset quantities to original values");
-                Console.WriteLine("5. Clear all data and start over");
-                Console.WriteLine("6. Print ingredients with steps");
-                Console.WriteLine("0. Exit");
+                Console.WriteLine("\nPlease select an option:");
+                Console.WriteLine("1. Add ingredients");
+                Console.WriteLine("2. Add steps");
+                Console.WriteLine("3. Scale recipe");
+                Console.WriteLine("4. Reset recipe scale");
+                Console.WriteLine("5. Clear recipe");
+                Console.WriteLine("6. Display recipe");
+                Console.WriteLine("7. Exit");
 
-                string command = Console.ReadLine();
-
-                switch (command)
+                // get user input and validate it
+                string input;
+                int choice;
+                do
                 {
-                    case "1":
-                            recipe.AddIngredient(name, quantity, unit);
-                            Console.Write("Ingredient: " + (i + 1) + "\n");
-                            Console.Write("Name: ");
-                            string name = Console.ReadLine();
-                            Console.Write("Quantity: ");
-                            double quantity = double.Parse(Console.ReadLine());
-                            Console.Write("Unit: ");
-                            string unit = Console.ReadLine();
-                            
+                    Console.Write("\nEnter your choice (1-7): ");
+                    input = Console.ReadLine();
+                } while (!int.TryParse(input, out choice) || choice < 1 || choice > 7);
+
+                switch (choice)
+                {
+                    case 1:
+                        recipe.AddIngredient(name, quantity, unit); // call the AddIngredients method of the recipe object
                         break;
-
-                    case "2":
-                            Console.Write("Enter scale factor: ");
-                            double factor = double.Parse(Console.ReadLine());
-                            recipe.Scale(factor);
+                    case 2:
+                        recipe.AddStep(description); // call the AddSteps method of the recipe object
                         break;
-
-                    case "3":
-                            Console.WriteLine(recipe.ToString());
+                    case 3:
+                        recipe.ScaleRecipe(factor); // call the ScaleRecipe method of the recipe object
                         break;
-
-                    case "4":
-                            recipe.Reset();
+                    case 4:
+                        recipe.ResetRecipe(); // call the ResetScale method of the recipe object
                         break;
-
-                    case "5":
-                            recipe.Clear();
+                    case 5:
+                        recipe.ClearRecipe(); // call the ClearRecipe method of the recipe object
                         break;
-
-                    case "6":
-                            Console.WriteLine(recipe.ToStringWithSteps());
+                    case 6:
+                        recipe.DisplayRecipe(recipe); // call the DisplayRecipe method of the recipe object
                         break;
-
-                    case "0":
-                        return;
-
-                    default:
-                            Console.WriteLine("Invalid command");
+                    case 7:
+                        exit = true; // set exit flag to true to exit the loop
                         break;
                 }
             }
+
+            Console.WriteLine("Thank you for using Recipe Scaler!");
         }
     }
 }

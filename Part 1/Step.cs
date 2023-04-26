@@ -6,14 +6,16 @@ using System.Threading.Tasks;
 
 namespace RecipeApplication
 {
+    // Step class to represent a step in the recipe
     internal class Step
     {
+        // Properties
         public string Description { get; set; }
 
-        public override string ToString()
+        // Constructor
+        public Step(string description)
         {
-            return Description;
-
+            Description = description;
         }
     }
 }
