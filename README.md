@@ -1,18 +1,18 @@
 # Part-1 
 A list of how I(Loyiso Ndlovu_ST10161873) compiled the code and what each class has:
 
-Ingredient class:
+1. Ingredient class:
 ToString(): returns a string representation of the ingredient.
-Step class:
+2. Step class:
 Constructor: initializes the Description property.
-Recipe class:
+3. Recipe class:
 AddIngredient(string name, double quantity, string unit): creates a new Ingredient object and adds it to the Ingredients list.
 AddStep(string description): creates a new Step object and adds it to the Steps list.
 PrintRecipe(): prints the recipe to the console.
 ScaleRecipe(double factor): scales all the ingredient quantities by the specified factor.
 ResetQuantities(): resets all the ingredient quantities to their original values.
 Clear(): clears all the ingredients and steps from the recipe.
-Program class:
+4. Program class:
 Constructor: creates a new Recipe object.
 Run(): runs the program and prompts the user for input.
 AddIngredient(): prompts the user for the ingredient's name, quantity, and unit of measurement, and adds it to the recipe.
