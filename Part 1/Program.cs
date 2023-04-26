@@ -1,10 +1,17 @@
-﻿using System;
+﻿using ErenYeager;
+using System;
 
 namespace ErenYeager
 {
     // main program class to interact with the user
     public class Program
     {
+
+        public static void Main(string[] args)
+        {
+            Program cli = new Program();
+            cli.Run();
+        }
         // Properties
         public Recipe Recipe { get; set; }
 
@@ -13,107 +20,124 @@ namespace ErenYeager
         {
             Recipe = new Recipe();
         }
+        
 
         // Methods
         public void Run()
         {
-            bool running = true;
+            
+        Console.WriteLine("Welcome to the Recipe Manager!");
 
-            while (running)
-            {
-                Console.WriteLine("What would you like to do?");
-                Console.WriteLine("1. Add ingredient");
-                Console.WriteLine("2. Add step");
-                Console.WriteLine("3. Print recipe");
-                Console.WriteLine("4. Scale recipe");
-                Console.WriteLine("5. Reset quantities");
-                Console.WriteLine("6. Clear recipe");
-                Console.WriteLine("7. Quit");
+        // Prompt the user for the number of ingredients they want to add
+        Console.Write("How many ingredients do you want to add? ");
+        int numIngredients = int.Parse(Console.ReadLine());
 
-                string input = Console.ReadLine();
-
-                switch (input)
-                {
-                    case "1":
-                        AddIngredient();
-                        break;
-                    case "2":
-                        AddStep();
-                        break;
-                    case "3":
-                        PrintRecipe();
-                        break;
-                    case "4":
-                        ScaleRecipe();
-                        break;
-                    case "5":
-                        ResetQuantities();
-                        break;
-                    case "6":
-                        ClearRecipe();
-                        break;
-                    case "7":
-                        running = false;
-                        break;
-                    default:
-                        Console.WriteLine("Invalid input.");
-                        break;
-                }
-            }
-        }
-
-        private void AddIngredient()
+        // Prompt the user for the name, quantity, and unit of measurement for each ingredient
+        for (int i = 1; i <= numIngredients; i++)
         {
-            Console.WriteLine("Enter ingredient name:");
-            string name = Console.ReadLine();
+            AddIngredient();
+    }
 
-            Console.WriteLine("Enter quantity:");
-            double quantity;
-            while (!double.TryParse(Console.ReadLine(), out quantity))
-            {
-                Console.WriteLine("Invalid input. Please enter a number.");
-            }
+    // Prompt the user for the number of steps they want to add
+    Console.Write("How many steps do you want to add? ");
+        int numSteps = int.Parse(Console.ReadLine());
 
-            Console.WriteLine("Enter unit of measurement:");
-            string unit = Console.ReadLine();
-
-            Recipe.AddIngredient(name, quantity, unit);
-        }
-
-        private void AddStep()
+        // Prompt the user for the description for each step
+        for (int i = 1; i <= numSteps; i++)
         {
-            Console.WriteLine("Enter step description:");
-            string description = Console.ReadLine();
+            AddStep();
+}
 
-            Recipe.AddStep(description);
-        }
+// Prompt the user for the action they want to perform
+string action = "";
+while (action != "exit")
+{
+    Console.Write("\nWhat would you like to do? (add ingredient, add step, print recipe, scale recipe, reset quantities, clear recipe, exit): ");
+    action = Console.ReadLine().ToLower();
 
-        private void PrintRecipe()
-        {
-            Recipe.PrintRecipe();
-        }
+    switch (action)
+    {
+        case "add ingredient":
+            AddIngredient();
+            break;
 
-        private void ScaleRecipe()
-        {
-            Console.WriteLine("Enter scaling factor:");
-            double factor;
-            while (!double.TryParse(Console.ReadLine(), out factor))
-            {
-                Console.WriteLine("Invalid input. Please enter a number.");
-            }
+        case "add step":
+            AddStep();
+            break;
 
-            Recipe.ScaleRecipe(factor);
-        }
+        case "print recipe":
+            PrintRecipe();
+            break;
 
-        private void ResetQuantities()
-        {
-            Recipe.ResetQuantities();
-        }
+        case "scale recipe":
+            ScaleRecipe();
+            break;
 
-        private void ClearRecipe()
-        {
-            Recipe.Clear();
-        }
+        case "reset quantities":
+            ResetQuantities();
+            break;
+
+        case "clear recipe":
+            ClearRecipe();
+            break;
+
+        case "exit":
+            Console.WriteLine("\nGoodbye!");
+            break;
+
+        default:
+            Console.WriteLine("\nInvalid input. Please try again.");
+            break;
     }
 }
+    }
+
+    public void AddIngredient()
+{
+    Console.Write("\nEnter the ingredient name: ");
+    string name = Console.ReadLine();
+
+    Console.Write("Enter the quantity: ");
+    double quantity = double.Parse(Console.ReadLine());
+
+    Console.Write("Enter the unit of measurement: ");
+    string unit = Console.ReadLine();
+
+    Recipe.AddIngredient(name, quantity, unit);
+}
+
+public void AddStep()
+{
+    Console.Write("\nEnter the step description: ");
+    string description = Console.ReadLine();
+
+    Recipe.AddStep(description);
+}
+
+public void PrintRecipe()
+{
+    Recipe.PrintRecipe();
+}
+
+public void ScaleRecipe()
+{
+    Console.Write("\nEnter the scaling factor (0.5, 2, or 3): ");
+    double factor = double.Parse(Console.ReadLine());
+
+    Recipe.ScaleRecipe(factor);
+}
+
+public void ResetQuantities()
+{
+    Recipe.ResetQuantities();
+    Console.WriteLine("\nQuantities have been reset to their original values.");
+}
+
+public void ClearRecipe()
+{
+    Recipe.Clear();
+    Console.WriteLine("\nRecipe has been cleared.");
+}
+}
+    }
 
