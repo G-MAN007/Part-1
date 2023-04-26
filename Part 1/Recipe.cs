@@ -1,148 +1,77 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Services;
 using System.Xml.Linq;
 
-namespace RecipeApplication
+namespace ErenYeager
 {
     // Recipe class to manage the ingredients and steps in the recipe
-    class Recipe
+    public class Recipe
     {
         // Properties
-        private string recipeName;
-        private List<Ingredient> ingredientsList;
-        private List<Step> stepsList;
-        private double servingSize;
-        private bool isScaled;
+        public int NumIngredients { get; set; }
+        public List<Ingredient> Ingredients { get; set; }
+        public int NumSteps { get; set; }
+        public List<string> Steps { get; set; }
 
-        // Constructor
-        public Recipe(string nawa)
+        // Constructors
+        public Recipe()
         {
-            recipeName = nawa;
-            ingredientsList = new List<Ingredient>();
-            stepsList = new List<Step>();
-            servingSize = 1;
-            isScaled = false;
+            Ingredients = new List<Ingredient>();
+            Steps = new List<string>();
         }
 
         // Methods
-
-        public void AddIngredient()
+        public void AddIngredient(string name, double quantity, string unit)
         {
-            Console.WriteLine("Enter recipe name:");
-            string nawa = Console.ReadLine();
-            Console.WriteLine("Enter number of servings:");
-            int servings = int.Parse(Console.ReadLine());
-            
-            Console.WriteLine("Enter number of ingredients:");
-            int numIngredients = int.Parse(Console.ReadLine());
-            
-            for (int i = 0; i < numIngredients; i++)
-            {
-                
-                Console.WriteLine($"Enter ingredient {i + 1}:");
-                string name = Console.ReadLine();
-
-                Console.WriteLine($"Enter quantity of {name}:");
-                double quantity = double.Parse(Console.ReadLine());
-
-                Console.WriteLine($"Enter unit of {name}:");
-                string unit = Console.ReadLine();
-
-                if (i >= 0 && i < ingredientsList.Count)
-                {
-                    ingredientsList[i] = new Ingredient(name, quantity, unit);
-                }
-
-                
-
-            }
-            
-            Console.WriteLine("Enter number of steps:");
-            int numSteps = int.Parse(Console.ReadLine());
-
-            for (int i = 0; i < numSteps; i++)
-            {
-                Console.WriteLine($"Enter step {i + 1}:");
-                string description = Console.ReadLine();
-                if (i >= 0 && i < stepsList.Count)
-                {
-                    stepsList[i] = new Step(description);
-                }
-            }
+            Ingredients.Add(new Ingredient { Name = name, Quantity = quantity, Unit = unit });
         }
 
-        // Scale method scales the recipe by the given factor
-        public void Scale()
+        public void AddStep(string description)
         {
-            double factor = 1;
-            if (factor <= 0)
-            {
-                Console.WriteLine("Invalid scale factor. The scale factor must be greater than 0.");
-            }
-            else if (factor == 1)
-            {
-                Console.WriteLine("The recipe is already at its original scale.");
-            }
-            else
-            {
-                foreach (Ingredient ingredient in ingredientsList)
-                {
-                    ingredient.ScaleIngredient(factor);
-                }
-
-                servingSize *= factor;
-                isScaled = true;
-            }
-            
+            Steps.Add(description);
         }
 
-        // Reset method resets the recipe back to its original scale
-        public void Reset()
-        {
-            if (isScaled)
-            {
-                foreach (Ingredient ingredient in ingredientsList)
-                {
-                    ingredient.ResetQuantity(1);
-                }
-
-                servingSize = 1;
-                isScaled = false;
-                Console.WriteLine("The recipe has been reset to its original scale.");
-            }
-            else
-            {
-                Console.WriteLine("The recipe is already at its original scale.");
-            }
-        }
-
-        // Clear method clears the recipe data
         public void Clear()
         {
-            ingredientsList.Clear();
-            stepsList.Clear();
-            servingSize = 1;
-            isScaled = false;
-            Console.WriteLine("The recipe data has been cleared.");
+            NumIngredients = 0;
+            Ingredients.Clear();
+            NumSteps = 0;
+            Steps.Clear();
         }
 
-        // DisplayRecipe method displays the recipe to the console
-        public void DisplayRecipe()
+        public void PrintRecipe()
         {
-            Console.WriteLine($"Recipe for {recipeName} (serves {servingSize}):");
             Console.WriteLine("Ingredients:");
-            foreach (Ingredient ingredient in ingredientsList)
+            foreach (Ingredient ingredient in Ingredients)
             {
-                Console.WriteLine($"- {ingredient.Quantity} {ingredient.Unit} {ingredient.Name}");
+                Console.WriteLine($"{ingredient.Quantity} {ingredient.Unit} {ingredient.Name}");
             }
 
             Console.WriteLine("Steps:");
-            foreach (Step step in stepsList)
+            for (int i = 0; i < Steps.Count; i++)
             {
-                Console.WriteLine($"- {step.Description}");
+                Console.WriteLine($"{i + 1}. {Steps[i]}");
+            }
+        }
+
+        public void ScaleRecipe(double factor)
+        {
+            foreach (Ingredient ingredient in Ingredients)
+            {
+                ingredient.Quantity *= factor;
+            }
+        }
+
+        public void ResetQuantities()
+        {
+            foreach (Ingredient ingredient in Ingredients)
+            {
+                ingredient.Quantity /= 2;
             }
         }
     }
+
 }
 
 

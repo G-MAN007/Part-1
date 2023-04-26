@@ -1,11 +1,12 @@
-﻿namespace RecipeApplication
+﻿namespace ErenYeager
 {
     // Step class to represent a step in the recipe
-    internal class Step
+    public class Step
     {
-        public string Description { get; set; } // holds the description of the step
+        // Properties
+        public string Description { get; set; }
 
-        // constructor to initialize the description of the step
+        // Constructors
         public Step(string description)
         {
             Description = description;

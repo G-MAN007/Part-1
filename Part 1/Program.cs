@@ -1,89 +1,119 @@
 ﻿using System;
 
-namespace RecipeApplication
+namespace ErenYeager
 {
     // main program class to interact with the user
-    class Program
+    public class Program
     {
-        
-        public static void Main(string[] args)
+        // Properties
+        public Recipe Recipe { get; set; }
+
+        // Constructor
+        public Program()
         {
-            Console.WriteLine("Welcome to Recipe Scaler!");
+            Recipe = new Recipe();
+        }
 
-            bool isRunning = true;
-            Recipe currentRecipe = null;
+        // Methods
+        public void Run()
+        {
+            bool running = true;
 
-            while (isRunning)
+            while (running)
             {
-                Console.WriteLine("\nWhat would you like to do?");
-                Console.WriteLine("1. Create a new recipe");
-                Console.WriteLine("2. Scale the current recipe");
-                Console.WriteLine("3. Reset the current recipe to its original values");
-                Console.WriteLine("4. Display the current recipe");
-                Console.WriteLine("5. Clear the current recipe and start over");
-                Console.WriteLine("6. Exit the program");
+                Console.WriteLine("What would you like to do?");
+                Console.WriteLine("1. Add ingredient");
+                Console.WriteLine("2. Add step");
+                Console.WriteLine("3. Print recipe");
+                Console.WriteLine("4. Scale recipe");
+                Console.WriteLine("5. Reset quantities");
+                Console.WriteLine("6. Clear recipe");
+                Console.WriteLine("7. Quit");
 
                 string input = Console.ReadLine();
 
                 switch (input)
                 {
                     case "1":
-                        Console.WriteLine("\nCreating a new recipe");
-                        currentRecipe = new Recipe("Your Recipe");
-                        currentRecipe.AddIngredient();
+                        AddIngredient();
                         break;
-
                     case "2":
-                        Console.WriteLine("\nScaling the recipe");
-                        if (currentRecipe != null)
-                        {
-                            currentRecipe.Scale();
-                        }
-                        else
-                        {
-                            Console.WriteLine("No recipe created yet!");
-                        }
+                        AddStep();
                         break;
-
                     case "3":
-                        Console.WriteLine("\nResetting the recipe to its original values");
-                        if (currentRecipe != null)
-                        {
-                            currentRecipe.Reset();
-                        }
-                        else
-                        {
-                            Console.WriteLine("No recipe created yet!");
-                        }
+                        PrintRecipe();
                         break;
-
                     case "4":
-                        Console.WriteLine("\nDisplaying the recipe");
-                        if (currentRecipe != null)
-                        {
-                            currentRecipe.DisplayRecipe();
-                        }
-                        else
-                        {
-                            Console.WriteLine("No recipe created yet!");
-                        }
+                        ScaleRecipe();
                         break;
-
                     case "5":
-                        Console.WriteLine("\nClearing the current recipe and starting over");
-                        currentRecipe = null;
+                        ResetQuantities();
                         break;
-
                     case "6":
-                        Console.WriteLine("\nExiting the program");
-                        isRunning = false;
+                        ClearRecipe();
                         break;
-
+                    case "7":
+                        running = false;
+                        break;
                     default:
-                        Console.WriteLine("\nInvalid input, please try again");
+                        Console.WriteLine("Invalid input.");
                         break;
                 }
             }
         }
+
+        private void AddIngredient()
+        {
+            Console.WriteLine("Enter ingredient name:");
+            string name = Console.ReadLine();
+
+            Console.WriteLine("Enter quantity:");
+            double quantity;
+            while (!double.TryParse(Console.ReadLine(), out quantity))
+            {
+                Console.WriteLine("Invalid input. Please enter a number.");
+            }
+
+            Console.WriteLine("Enter unit of measurement:");
+            string unit = Console.ReadLine();
+
+            Recipe.AddIngredient(name, quantity, unit);
+        }
+
+        private void AddStep()
+        {
+            Console.WriteLine("Enter step description:");
+            string description = Console.ReadLine();
+
+            Recipe.AddStep(description);
+        }
+
+        private void PrintRecipe()
+        {
+            Recipe.PrintRecipe();
+        }
+
+        private void ScaleRecipe()
+        {
+            Console.WriteLine("Enter scaling factor:");
+            double factor;
+            while (!double.TryParse(Console.ReadLine(), out factor))
+            {
+                Console.WriteLine("Invalid input. Please enter a number.");
+            }
+
+            Recipe.ScaleRecipe(factor);
+        }
+
+        private void ResetQuantities()
+        {
+            Recipe.ResetQuantities();
+        }
+
+        private void ClearRecipe()
+        {
+            Recipe.Clear();
+        }
     }
 }
+
