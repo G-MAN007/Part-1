@@ -3,8 +3,10 @@ A list of how I(Loyiso Ndlovu_ST10161873) compiled the code and what each class 
 
 1. Ingredient class:
 ToString(): returns a string representation of the ingredient.
+
 2. Step class:
 Constructor: initializes the Description property.
+
 3. Recipe class:
 AddIngredient(string name, double quantity, string unit): creates a new Ingredient object and adds it to the Ingredients list.
 AddStep(string description): creates a new Step object and adds it to the Steps list.
@@ -12,6 +14,7 @@ PrintRecipe(): prints the recipe to the console.
 ScaleRecipe(double factor): scales all the ingredient quantities by the specified factor.
 ResetQuantities(): resets all the ingredient quantities to their original values.
 Clear(): clears all the ingredients and steps from the recipe.
+
 4. Program class:
 Constructor: creates a new Recipe object.
 Run(): runs the program and prompts the user for input.
@@ -21,6 +24,32 @@ PrintRecipe(): calls the PrintRecipe method of the Recipe object.
 ScaleRecipe(): prompts the user for the scaling factor and calls the ScaleRecipe method of the Recipe object.
 ResetQuantities(): calls the ResetQuantities method of the Recipe object.
 ClearRecipe(): calls the Clear method of the Recipe object.
+
+How to Run the it:
+
+To run the program, you'll need to compile the code into an executable file. Here are the steps to do so using the `csc` command-line compiler:
+
+1. Open a text editor such as Visual Studio Code, and copy and paste the code for all of the classes (`Ingredient.cs`, `Step.cs`, `Recipe.cs`, and `CommandLineInterface.cs`) into separate files with the corresponding names, each with the `.cs` file extension.
+
+2. Open a command prompt or terminal window, and navigate to the directory where you saved the C# code files.
+
+3. Type the following command to compile the C# code files into an executable file:
+
+```
+csc *.cs
+```
+
+This will compile all the C# code files in the directory into an executable file called `Program.exe`.
+
+4. Type the following command to run the executable file:
+
+```
+Program.exe
+```
+
+This will start the program and display the initial prompt for the number of ingredients and steps to add.
+
+Note: The `csc` command-line compiler is included with Microsoft's .NET Framework, which should already be installed on your Windows computer if you have Visual Studio or any other .NET development tools installed. If you're using a different operating system or development environment, you may need to use a different compiler or follow different steps to compile and run the code.
 
 
 Assignment
