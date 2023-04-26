@@ -15,3 +15,10 @@ if the factor is 2.
 5. The user shall be able to clear all the data to enter a new recipe.
 6. The software shall not persist the user data between runs. The data shall only be stored in 
 memory while the software is running.
+
+Non-functional requirements:
+1. You are required to use internationally acceptable coding standards. Include 
+comprehensive comments explaining variable names, methods, and the logic of 
+programming code.
+2. You are required to use classes. 
+3. Store the ingredients and steps in arrays.
