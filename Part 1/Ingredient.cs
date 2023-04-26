@@ -13,7 +13,6 @@ namespace RecipeApplication
         public string Name { get; set; }
         public double Quantity { get; set; }
         public string Unit { get; set; }
-        private double originalQuantity;
 
         // Constructor
         public Ingredient(string name, double quantity, string unit)
@@ -21,11 +20,22 @@ namespace RecipeApplication
             Name = name;
             Quantity = quantity;
             Unit = unit;
-            originalQuantity = quantity;
         }
 
-        // Reset the ingredient quantity to its original quantity
-        public void ResetQuantity()
+        // Method to display ingredient in a user-friendly format
+        public string DisplayIngredient()
+        {
+            return $"{Name}: {Quantity} {Unit}";
+        }
+
+        // Method to scale ingredient quantity based on the specified factor
+        public void ScaleIngredient(double scaleFactor)
+        {
+            Quantity *= scaleFactor;
+        }
+
+        // Method to reset the ingredient quantity to its original value
+        public void ResetQuantity(double originalQuantity)
         {
             Quantity = originalQuantity;
         }

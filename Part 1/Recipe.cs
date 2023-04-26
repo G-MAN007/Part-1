@@ -9,74 +9,113 @@ using System.Xml.Linq;
 namespace RecipeApplication
 {
     // Recipe class to manage the ingredients and steps in the recipe
-    internal class Recipe
+    public class Recipe
     {
         // Properties
-        public string Name { get; set; }
-        public List<Ingredient> Ingredients { get; private set; }
-        public List<Step> Steps { get; private set; }
+        private string recipeName;
+        private List<Ingredient> ingredientsList;
+        private List<Step> stepsList;
+        private double servingSize;
+        private bool isScaled;
 
         // Constructor
         public Recipe(string name)
         {
-            Name = name;
-            Ingredients = new List<Ingredient>();
-            Steps = new List<Step>();
+            recipeName = name;
+            ingredientsList = new List<Ingredient>();
+            stepsList = new List<Step>();
+            servingSize = 1;
+            isScaled = false;
         }
 
-        // Add an ingredient to the recipe
+        // Methods
+
+        // AddIngredient method adds a new ingredient to the recipe
         public void AddIngredient(string name, double quantity, string unit)
         {
-            Ingredients.Add(new Ingredient(name, quantity, unit));
+            Ingredient newIngredient = new Ingredient(name, quantity, unit);
+            ingredientsList.Add(newIngredient);
         }
 
-        // Add a step to the recipe
-        public void AddStep(string description)
+        // AddStep method adds a new step to the recipe
+        public void AddStep(string stepText)
         {
-            Steps.Add(new Step(description));
+            Step newStep = new Step(stepText);
+            stepsList.Add(newStep);
         }
 
-        // Scale the recipe by a given factor
-        public void ScaleRecipe(double factor)
+        // Scale method scales the recipe by the given factor
+        public void Scale(double factor)
         {
-            foreach (Ingredient ingredient in Ingredients)
+            if (factor <= 0)
             {
-                ingredient.Quantity *= factor;
+                Console.WriteLine("Invalid scale factor. The scale factor must be greater than 0.");
+            }
+            else if (factor == 1)
+            {
+                Console.WriteLine("The recipe is already at its original scale.");
+            }
+            else
+            {
+                foreach (Ingredient ingredient in ingredientsList)
+                {
+                    ingredient.Scale(factor);
+                }
+
+                servingSize *= factor;
+                isScaled = true;
             }
         }
 
-        // Reset the recipe to its original quantities before scaling
-        public void ResetRecipe()
+        // Reset method resets the recipe back to its original scale
+        public void Reset()
         {
-            foreach (Ingredient ingredient in Ingredients)
+            if (isScaled)
             {
-                ingredient.ResetQuantity();
+                foreach (Ingredient ingredient in ingredientsList)
+                {
+                    ingredient.Reset();
+                }
+
+                servingSize = 1;
+                isScaled = false;
+                Console.WriteLine("The recipe has been reset to its original scale.");
+            }
+            else
+            {
+                Console.WriteLine("The recipe is already at its original scale.");
             }
         }
 
-        // Clear all the ingredients and steps from the recipe
-        public void ClearRecipe()
+        // Clear method clears the recipe data
+        public void Clear()
         {
-            Ingredients.Clear();
-            Steps.Clear();
+            ingredientsList.Clear();
+            stepsList.Clear();
+            servingSize = 1;
+            isScaled = false;
+            Console.WriteLine("The recipe data has been cleared.");
         }
-        public void DisplayRecipe(Recipe recipe)
+
+        // DisplayRecipe method displays the recipe to the console
+        public void DisplayRecipe()
         {
-            Console.WriteLine($"Recipe Name: {recipe.Name}\n");
+            Console.WriteLine("\nRecipe: " + recipeName);
+            Console.WriteLine("Serving size: " + servingSize + "\n");
 
             Console.WriteLine("Ingredients:");
-            for (int i = 0; i < recipe.Ingredients.Count; i++)
+            foreach (Ingredient ingredient in ingredientsList)
             {
-                Ingredient ingredient = recipe.Ingredients[i];
-                Console.WriteLine($"{i + 1}. {ingredient.Name} - {ingredient.Quantity} {ingredient.Unit}");
+                Console.WriteLine("- " + ingredient.ToString());
             }
 
             Console.WriteLine("\nSteps:");
-            for (int i = 0; i < recipe.Steps.Count; i++)
+            for (int i = 0; i < stepsList.Count; i++)
             {
-                Step step = recipe.Steps[i];
-                Console.WriteLine($"{i + 1}. {step.Description}");
+                Console.WriteLine((i + 1) + ". " + stepsList[i].ToString());
             }
+
+            Console.WriteLine();
         }
     }
 }
